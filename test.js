@@ -30,6 +30,10 @@ io.on("connection", (socket) => {
     const userIP = socket.handshake.address;
     console.log(userIP);
     console.log('A user connected');
+    
+    socket.on("redirect-req", n =>{
+        io.emit("redirect" , ("http://google.com"));
+    });
 
     let x = true;
     socket.on('chat message', (message ) => {
@@ -42,17 +46,7 @@ io.on("connection", (socket) => {
         x = true;
        },100);
     });
-    function disconnectAllUsers() {
-        // Get a list of connected sockets
-        const connectedSockets = io.sockets.sockets;
     
-        // Loop through each socket and disconnect it
-        for (const socketId in connectedSockets) {
-            const socket = connectedSockets[socketId];
-            socket.disconnect(true); // Close the socket
-        }
-    }
-
     socket.on("onuser", (t) => {
         io.emit("usern", t);
        
@@ -84,7 +78,6 @@ io.on("connection", (socket) => {
         console.log('A user disconnected');
     });
 });
-
 const PORT = process.env.PORT || 5500;
 
 server.listen(PORT, () => {
