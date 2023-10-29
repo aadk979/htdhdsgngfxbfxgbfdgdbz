@@ -4,16 +4,34 @@ const http = require("http");
 const { Server } = require("socket.io");
 const cors = require("cors");
 
+
 const options = {
   method: 'POST',
   hostname: 'api.render.com',
-  port: 10000,
+  port: null,
   path: '/v1/services/srv-ckud7cmb0mos738u2ssg/suspend',
   headers: {
     accept: 'application/json',
     authorization: 'Bearer rnd_dbjVtRsFHMVGqUPbdHtlPLN4ulbq'
   }
 };
+
+const req = http.request(options, function (res) {
+  const chunks = [];
+
+  res.on('data', function (chunk) {
+    chunks.push(chunk);
+  });
+
+  res.on('end', function () {
+    const body = Buffer.concat(chunks);
+    console.log(body.toString());
+  });
+});
+
+req.end();
+
+
 function kill() {
     const req = http.request(options, function (res) {
         const chunks = [];
