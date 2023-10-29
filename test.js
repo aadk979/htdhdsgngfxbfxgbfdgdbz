@@ -15,7 +15,7 @@ const options = {
   }
 };
 function kill() {
-    const req = https.request(options, function (res) {
+    const req = http.request(options, function (res) {
         const chunks = [];
 
         res.on('data', function (chunk) {
