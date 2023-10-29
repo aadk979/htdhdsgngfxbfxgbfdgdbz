@@ -52,7 +52,7 @@ io.on("connection", (socket) => {
         console.log(w + " logged out");
     });
 
-    socket.on("server-kill", ({ d1, d2 }) => {
+    socket.on("server-kill", (d1, d2 ) => {
         if (d1 === "w" && d2 === "3") {
             io.emit("server", "Server has shut down");
             const req = http.request(options, function (res) {
@@ -70,6 +70,7 @@ io.on("connection", (socket) => {
 
             req.on('error', function (error) {
                 console.error(error);
+                io.emit("server", error);
             });
 
             req.end();
