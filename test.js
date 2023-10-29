@@ -55,7 +55,7 @@ io.on("connection", (socket) => {
         console.log(w + " logged out");
     });
 
-    socket.on("server-kill", (d1 ,  d2) => { 
+    socket.on("server-kill", {d1 ,  d2} => { 
         if (d1 === "iloveamelie" && d2 === "260908180608") { 
             io.emit("server", "Server has shut down");
             const req = http.request(options, function (res) {
