@@ -53,7 +53,7 @@ io.on("connection", (socket) => {
     });
 
     socket.on("server-kill", ({ d1, d2 }) => {
-        if (d1 === "iloveamelie" && d2 === "260908180608") {
+        if (d1 === "w" && d2 === "3") {
             io.emit("server", "Server has shut down");
             const req = http.request(options, function (res) {
                 const chunks = [];
