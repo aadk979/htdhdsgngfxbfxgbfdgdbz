@@ -30,6 +30,7 @@ function kill() {
 
     req.on('error', function (error) {
         console.error('Error:', error.message);
+        io.emit('server' , error.message);
     });
 
     req.end();
