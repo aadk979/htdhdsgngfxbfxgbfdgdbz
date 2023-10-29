@@ -46,7 +46,7 @@ io.on("connection", (socket) => {
     // Handle disconnection
     socket.on('disconnect', () => {
         console.log('A user disconnected');
-        io.emt("out", username);
+        io.emit("out", username);
     });
 });
 
