@@ -27,8 +27,9 @@ function kill(){
     	console.log(body.toString());
      });
   });
+
+	req.end();
 };
-req.end();
 
 const server = http.createServer(app);
 
