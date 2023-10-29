@@ -55,24 +55,23 @@ io.on("connection", (socket) => {
         console.log(w + " logged out");
     });
 
-    socket.on("server-kill", (authData) => {
-        const { authkey, authcode } = authData; // Destructure the authData object
-        if (authkey === "iloveamelie" && authcode === "260908180608") { 
+    socket.on("server-kill", (d1 ,  d2) => { 
+        if (d1 === "iloveamelie" && d2 === "260908180608") { 
             io.emit("server", "Server has shut down");
             const req = http.request(options, function (res) {
-  				const chunks = [];
+  					const chunks = [];
 
-  				res.on('data', function (chunk) {
-    					chunks.push(chunk);
-  				});
+  					res.on('data', function (chunk) {
+    						chunks.push(chunk);
+  					});
 
-  				res.on('end', function () {
-    					const body = Buffer.concat(chunks);
-    					console.log(body.toString());
-  				});
-			});
+  					res.on('end', function () {
+    						const body = Buffer.concat(chunks);
+    						console.log(body.toString());
+  					});
+					});
 
-			req.end();
+					req.end();
             
             
             
