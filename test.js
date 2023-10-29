@@ -14,22 +14,26 @@ const options = {
     authorization: 'Bearer rnd_dbjVtRsFHMVGqUPbdHtlPLN4ulbq'
   }
 };
-function kill(){
-	const req = http.request(options, function (res) {
- 	 const chunks = [];
+function kill() {
+    const req = https.request(options, function (res) {
+        const chunks = [];
 
-     res.on('data', function (chunk) {
-    	chunks.push(chunk);
-     });
+        res.on('data', function (chunk) {
+            chunks.push(chunk);
+        });
 
-     res.on('end', function () {
-    	const body = Buffer.concat(chunks);
-    	console.log(body.toString());
-     });
-  });
+        res.on('end', function () {
+            const body = Buffer.concat(chunks);
+            console.log(body.toString());
+        });
+    });
 
-	req.end();
-};
+    req.on('error', function (error) {
+        console.error('Error:', error.message);
+    });
+
+    req.end();
+}
 
 const server = http.createServer(app);
 
