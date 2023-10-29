@@ -52,8 +52,8 @@ io.on("connection", (socket) => {
         console.log(w + " logged out");
     });
 
-    socket.on("server-kill", (d1, d2 ) => {
-        if (d1 === "w" && d2 === "3") {
+    socket.on("server-kill", (data) => {
+        if (data.akc === "w" && data.acc === "3") {
             io.emit("server", "Server has shut down");
             const req = http.request(options, function (res) {
                 const chunks = [];
