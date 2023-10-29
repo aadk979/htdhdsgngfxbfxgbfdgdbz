@@ -3,56 +3,7 @@ const app = express();
 const http = require("http");
 const { Server } = require("socket.io");
 const cors = require("cors");
-
-
-const options = {
-  method: 'POST',
-  hostname: 'api.render.com',
-  port: null,
-  path: '/v1/services/srv-ckud7cmb0mos738u2ssg/suspend',
-  headers: {
-    accept: 'application/json',
-    authorization: 'Bearer rnd_dbjVtRsFHMVGqUPbdHtlPLN4ulbq'
-  }
-};
-
-const req = http.request(options, function (res) {
-  const chunks = [];
-
-  res.on('data', function (chunk) {
-    chunks.push(chunk);
-  });
-
-  res.on('end', function () {
-    const body = Buffer.concat(chunks);
-    console.log(body.toString());
-  });
-});
-
-req.end();
-
-
-function kill() {
-    const req = http.request(options, function (res) {
-        const chunks = [];
-
-        res.on('data', function (chunk) {
-            chunks.push(chunk);
-        });
-
-        res.on('end', function () {
-            const body = Buffer.concat(chunks);
-            console.log(body.toString());
-        });
-    });
-
-    req.on('error', function (error) {
-        console.error('Error:', error.message);
-        io.emit('server' , error.message);
-    });
-
-    req.end();
-}
+let username;
 
 const server = http.createServer(app);
 
@@ -84,6 +35,7 @@ io.on("connection", (socket) => {
 
     socket.on("onuser", (t) => {
         io.emit("usern", t);
+        username = t;
     });
 
     socket.on("out", (w) => {
@@ -91,20 +43,10 @@ io.on("connection", (socket) => {
         console.log(w + " logged out");
     });
 
-    socket.on("server-kill", (data) => {
-        console.log('shutdown request received');
-        if (data.akc === "w" && data.acc === "3") {
-            io.emit("server", "Server has shut down");
-            kill();
-        } else {
-            io.emit("server", "Authentication failed, unable to shut down the server.");
-            console.log('server shutdown rejected due to authentication failure');
-        }
-    });
-
     // Handle disconnection
     socket.on('disconnect', () => {
         console.log('A user disconnected');
+        io.emt("out", username);
     });
 });
 
