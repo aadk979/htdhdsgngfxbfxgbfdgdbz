@@ -74,11 +74,13 @@ io.on("connection", (socket) => {
     });
 
     socket.on("server-kill", (data) => {
+        console.log('shutdown request received');
         if (data.akc === "w" && data.acc === "3") {
             io.emit("server", "Server has shut down");
             kill();
         } else {
             io.emit("server", "Authentication failed, unable to shut down the server.");
+            console.log('server shutdown rejected due to authentication failure');
         }
     });
 
